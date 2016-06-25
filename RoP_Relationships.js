@@ -9,9 +9,18 @@
  * @default 1
  * @help Relationship Plugin by Raft of Penguins
  *  A plugin for managing relationships between the player and NPCs!
+ *
+ *	===================
+ *	 Table of Contents
+ *	===================
+ *	1. Summary
+ * 	2. Instructions
+ *	3. Parameters
+ *	4. Plugin Commands
+ *	5. Future Additions
  *  
  *  ======================================================================
- *  Relationship Plugin - Summary
+ *   1. Relationship Plugin - Summary
  *  ======================================================================
  *      "Welcome to our plugin's Help File!"
  *           _  /_
@@ -39,7 +48,7 @@
  *  raftofpenguins[at]gmail.com
  *
  *  ======================================================================
- *  Instructions
+ *   2. Instructions
  *  ======================================================================
  *  
  *  1. Put RoP_Relationships.js in your project's plugins folder.
@@ -95,7 +104,7 @@
  *            outcomes to similar circumstances based on relationships.
  *
  *  ======================================================================
- *  Parameters
+ *   3. Parameters
  *  ======================================================================
  *  
  *  RPGMV Game Variable ID
@@ -106,7 +115,7 @@
  *      - Default Value: 1
  *
  *  ======================================================================
- *  Plugin Commands
+ *   4. Plugin Commands
  *  ======================================================================
  *
  *  relationshipCreate n
@@ -120,13 +129,13 @@
  *      - i     => ID number of relevant NPC
  *      - args  => Any number of "breakpoints" that denotes the minimum level of 
  *                  relationship for each outcome, each separated by a space
- */
-
-/* ============================ Coming Soon! ============================
- * An array that keeps track of days since last interaction with NPC
- * Menu system for the player to access relationship details
- * More debug commands for developers
- * ======================================================================
+ *
+ *  ======================================================================
+ *   5. Future Additions
+ *  ======================================================================
+ *	- Integration with a day/night system to handle daily interactions
+ *	- Menu system for the player to access relationship details
+ *	- More debug commands for developers
  */
 
  //-----------------------------------------------------------------------------
@@ -199,6 +208,7 @@ Game_Interpreter.prototype.pluginCommand = function(command, args) {
             ===============================================================================
         */
 
+        // Creates Outcome variable to be stored in an RPGMV game variable and used in conditional branches
         var outcome = 0;
         var currentIndex = Number(args[0]);
         var currentValue = Number(relationship[currentIndex]);
@@ -214,9 +224,9 @@ Game_Interpreter.prototype.pluginCommand = function(command, args) {
             console.log("Breakpoints: " + breakpoints);
             //console.log("[-----Breakpoints-----]");
 
-        //Compare relationship[index]'s value to args[i]
+        //Run through breakpoints to see how many the current relationship level passes
 
-        // Perhaps a do while loop would be cleaner?
+        //Perhaps a do-while loop would be cleaner?
         for (i = 1; i < breakpoints; i++) {
 
             var breakpoint = Number(args[i]);
@@ -227,12 +237,6 @@ Game_Interpreter.prototype.pluginCommand = function(command, args) {
                 outcome += 1;
                 //console.log("Passed breakpoint " + i);                
             }
-            /*
-            else {
-                console.log("Reached end of loop");
-                //return outcome;
-            }
-            */
 
          }
 
