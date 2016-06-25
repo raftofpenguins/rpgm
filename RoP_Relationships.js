@@ -157,6 +157,7 @@
 // Allows plugin commands to be called from RPGMV Editor
 // - relationshipCreate         => creates [n] slots in which NPC relationship values can be stored
 // - relationshipMod            => modifies NPC [x]'s relationship value by [y]
+// - relationshipVar            => sets RPGMV Game Variable [x] equal to NPC [y]'s Relationship Value
 // - relationshipConditional    => returns outcome based on args[i] relationship-value breakpoints 
 
 var relationshipPluginCommands = Game_Interpreter.prototype.pluginCommand;
@@ -192,6 +193,14 @@ Game_Interpreter.prototype.pluginCommand = function(command, args) {
             console.log("Relationship value: " + relationship[relationshipIndex]);
             console.log("|===End Relationship Mod===|");
         
+    }
+
+    if(command == 'relationshipVar') {
+
+        var relationshipVarID = Number(args[0]); // ID number of the RPGMV Game Variable affected
+        var relationshipIndex = Number(args[1]); // ID number of the NPC whose Relationship Value is being stored
+
+        $gameVariables.setValue(relationshipVarID, relationship[relationshipIndex]); //Sets RPGMV game variable equal to outcome
     }
 
     if(command == 'relationshipConditional') {
